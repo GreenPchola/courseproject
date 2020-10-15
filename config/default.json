@@ -1,5 +1,6 @@
 {
     "server":{
-        "PORT":4000
+        "PORT":4000,
+        "secret":"Barcelona18992000"
     }
 }

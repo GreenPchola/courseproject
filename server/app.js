@@ -1,17 +1,17 @@
 const express = require("express")
 const config = require("config")
-const routes = require("./routes/user-routes")
+const userRoutes = require("./routes/user-routes")
 const app = express()
 const PORT = process.env.PORT || config.get("server.PORT");
 app.use(express.json())
-app.use("/api/", routes)
+app.use("/api/user/", userRoutes)
 const start = () => {
     try {
         app.listen(PORT, () => {
             console.log(` server has started${PORT}`)
         })
     } catch (e) {
-        console.log(e.message)
+        res.status(500).json({error:e.message})
         process.exit()
     }
 }

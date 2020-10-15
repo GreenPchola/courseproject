@@ -1,6 +1,7 @@
-const {signUp} = require("../controllers/users-controller")
+const {signUp,login} = require("../controllers/users-controller")
 const {Router} = require("express")
 const {userValidator} = require("../services/validation-service")
-const router = Router()
-router.post("/signup/",userValidator,signUp)
-module.exports = router
+const userRouter = Router()
+userRouter.post("/signup/",userValidator,signUp)
+userRouter.post("/login/",login)
+module.exports = userRouter

@@ -1,4 +1,4 @@
-const { User, Number } = require("../models")
+const { User, Number, userData } = require("../models")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const config = require("config")
@@ -12,8 +12,9 @@ const signUp = async (req, res) => {
         if (!candidate) {
             if (error.isEmpty()) {
                 const hashedPassword = await bcrypt.hash(password, 5)
-                await User.create({ name, userNumber: number, password: hashedPassword })
+                await User.create({ name, password: hashedPassword })
                 await Number.create({ number })
+                await userData.create({})
                 res.status(200).json({ message: "User was registered" })
             }
         } else {
@@ -43,10 +44,15 @@ const login = async (req, res) => {
     } catch (e) {
         res.json({ message: `Error: ${e.message}` })
     }
-
-
 }
+const updateUserData = async(req,res)=>{
+    const {country, city, workOrganization,profession, aboutUser} = req.body
+    await userData.update({country,city,workOrganization,profession,aboutUser}, {returning:true, where:{id:req.params.id}})
+    res.json({message:"user updated"})
+}
+
 module.exports = {
     signUp,
-    login
+    login,
+    updateUserData
 }
